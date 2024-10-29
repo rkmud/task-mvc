@@ -1,0 +1,23 @@
+services:
+  php:
+    build: .
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - net
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
+
+
