@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Response\Response;
+
 class ProductController
 {
+    private Response $response;
+
     public function show($id): void
     {
-
         $product = $this->getProductById($id);
+        $this->response = new Response();
+        if ($product) {
+            $this->response->view('product', ['product' => $product]);
 
-        if ($product)
-        {
-            echo "Product ID: " . $product['id'] . "<br>";
-            echo "Product Name: " . $product['name'] . "<br>";
-            echo "Product Price: $" . $product['price'] . "<br>";
-        } else
-        {
-            echo "Product not found!";
+        } else {
+            $this->response->view('error',['message' => 'Product not found'], 404);
         }
     }
 

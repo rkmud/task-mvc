@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Response\Response;
+
 class ContactController
 {
+    private Response $response;
+
+    public function __construct()
+    {
+        $this->response = new Response();
+    }
+
     function index(): void
     {
-        echo "Contact information";
+        $this->response->view('contact', []);
     }
 }
