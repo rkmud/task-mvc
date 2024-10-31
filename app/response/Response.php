@@ -10,16 +10,15 @@ class Response
     {
         $views_path = sprintf('app/views/%sView.php', $view);
 
-        if (file_exists($views_path))
-        {
-            if ($data != [])
-            {
-                extract($data, EXTR_PREFIX_SAME, 'data_');
-            }
-            require_once $views_path;
-        } else
-        {
+        if (!file_exists($views_path)) {
             echo 'Not found';
+            return;
         }
+
+        if ($data != []) {
+            extract($data, EXTR_PREFIX_SAME, 'data_');
+        }
+
+        require_once $views_path;
     }
 }

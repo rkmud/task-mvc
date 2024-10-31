@@ -21,18 +21,13 @@ class Router
         $this->response = new Response();
     }
 
-    public function router(): void
+    public function route(): void
     {
-        foreach ($this->routes as $pattern => $route)
-        {
-            if ($this->method === $route['method'] && preg_match("#^$pattern$#", $this->uri, $matches))
-            {
+        foreach ($this->routes as $pattern => $route) {
+            if ($this->method === $route['method'] && preg_match("#^$pattern$#", $this->uri, $matches)) {
                 $params = array_filter(
                     $matches,
-                    function ($key)
-                    {
-                        return !is_int($key);
-                    },
+                    fn($key) => !is_int($key),
                     ARRAY_FILTER_USE_KEY
                 );
                 $this->getController($route, $params);
@@ -46,13 +41,11 @@ class Router
     {
         $controllerClass = 'App\\Controllers\\' . $route['controller'] . 'Controller';
 
-        if (class_exists($controllerClass))
-        {
+        if (class_exists($controllerClass)) {
             $controller = new $controllerClass($this->response);
             $action = $route['action'];
             $controller->$action(...$params);
-        } else
-        {
+        } else {
             $this->response->view('error', ['message' =>'Controller not found'], 404);
         }
     }
