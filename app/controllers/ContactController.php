@@ -4,19 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Response\Response;
-
-class ContactController
+class ContactController extends BaseController
 {
-    private Response $response;
-
-    public function __construct()
-    {
-        $this->response = new Response();
-    }
-
     function index(): void
     {
-        $this->response->view('contact', []);
+        $this->view('contact');
     }
 }
