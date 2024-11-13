@@ -1,8 +1,3 @@
 <p>
-    <?php
-        if (isset($product)) {
-            printf("Id: %d<br> Name Product: %s<br> Cost: %d", $product['id'], $product['name'], $product['price']);
-        }
-    ?>
+    <?= isset($product) ? "Id: {$product['id']}<br> Name Product: {$product['name']}<br> Cost: {$product['price']}" : '' ?>
 </p>
-
