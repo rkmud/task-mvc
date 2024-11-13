@@ -8,7 +8,7 @@ use App\Response\Response;
 
 class BaseController
 {
-    public Response $response;
+    protected Response $response;
 
     public function __construct()
     {

@@ -12,6 +12,7 @@ class ProductController extends BaseController
 
         if (!$product) {
             $this->view('error', ['message' => 'Product not found'], 404);
+
             return;
         }
 
