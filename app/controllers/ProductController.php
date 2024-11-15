@@ -19,7 +19,7 @@ class ProductController extends BaseController
         $this->view('product', ['product' => $product]);
     }
 
-    private function getProductById(int $id): null|array
+    protected function getProductById(int $id): null|array
     {
         $products = [
             1 => ['id' => 1, 'name' => 'Product 1', 'price' => 10.00],
