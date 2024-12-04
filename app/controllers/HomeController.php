@@ -21,6 +21,8 @@ class HomeController extends BaseController
             $this->deleteCookie($_GET['delete_cookie']);
         } elseif (isset($_GET['delete_session'])) {
             $this->deleteSession();
+        } elseif (isset($_GET['delete_session_key'])) {
+            $this->deleteSessionKey();
         }
 
         $this->render();
@@ -66,15 +68,25 @@ class HomeController extends BaseController
 
     private function createSession(): void
     {
+        $key = $_POST['session_key'] ?? '';
         $value = $_POST['session_value'] ?? '';
-        if ($value) {
-            SessionService::setSession($value);
+        if ($key && $value) {
+            SessionService::setSession($key, $value);
         }
 
         header('Location: /');
         exit;
     }
+    private function deleteSessionKey(): void
+    {
+        $key = $_GET['delete_session_key'] ?? '';
+        if ($key) {
+            SessionService::deleteSessionKey($key);
+        }
 
+        header('Location: /');
+        exit;
+    }
     private function deleteSession(): void
     {
         SessionService::destroySession();

@@ -8,13 +8,13 @@ use App\interfaces\CookieServiceInterface;
 
 class CookieService implements CookieServiceInterface
 {
-    public static function setCookie(string $name, string $value, int $time): bool
+    public static function setCookie(string $name, string $value, int $time, string $path = "/"): bool
     {
         if ($name === '' || $value === '' || $time <= 0) {
             return false;
         }
 
-        return setcookie($name, $value, time() + $time, "/");
+        return setcookie($name, $value, time() + $time, $path);
     }
 
     public static function deleteCookie(string $name): bool

@@ -8,16 +8,22 @@ use App\interfaces\SessionServiceInterface;
 
 class SessionService implements SessionServiceInterface
 {
-    public static function setSession(string $value): void
+    public static function setSession(string $key,string $value): void
     {
-        $_SESSION['PHPSESSID'] = $value;
+        $_SESSION[$key] = $value;
     }
 
     public static function getSession(): array
     {
-        return isset($_SESSION['PHPSESSID']) ? ['PHPSESSID' => $_SESSION['PHPSESSID']] : [];
+        return $_SESSION;
     }
 
+    public static function deleteSessionKey(string $key): void
+    {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
+    }
     public static function destroySession(): void
     {
         if (isset($_COOKIE[session_name()])) {
