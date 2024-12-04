@@ -24,7 +24,9 @@ class Router
     public function run(): void
     {
         foreach ($this->routes as $pattern => $route) {
-            if ($this->method === $route['method'] && preg_match("#^$pattern$#", $this->uri, $matches)) {
+            $allowedMethods = (array)$route['method'];
+
+            if (in_array($this->method, $allowedMethods, true) && preg_match("#^$pattern$#", $this->uri, $matches)) {
                 $params = array_filter(
                     $matches,
                     fn($key) => !is_int($key),
@@ -34,7 +36,7 @@ class Router
                 return;
             }
         }
-        $this->response->view('error',['message' => 'Route not found'] ,404);
+        $this->response->view('error', ['message' => 'Route not found'], 404);
     }
 
     public function getController(array $route, array $params): void
