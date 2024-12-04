@@ -12,7 +12,7 @@ class Response
 
         $views_path = sprintf('app/views/%sView.php', $view);
 
-        if (!file_exists($views_path)) {
+        if (!$this->fileExists($views_path)) {
             echo 'Not found';
 
             return;
@@ -23,5 +23,10 @@ class Response
         }
 
         require_once $views_path;
+    }
+
+    public function fileExists(string $path): bool
+    {
+        return file_exists($path);
     }
 }
