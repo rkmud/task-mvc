@@ -1,9 +1,13 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 RUN apk add --no-cache \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
+    libmemcached-dev \
+    autoconf \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd
 

@@ -16,8 +16,14 @@ services:
     networks:
       - net
 
+  memcached:
+    image: memcached:latest
+    restart: always
+    networks:
+      - net
+    ports:
+      - "11211:11211"
 networks:
   net:
     driver: bridge
-
 
