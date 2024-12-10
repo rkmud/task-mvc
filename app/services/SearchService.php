@@ -1,35 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\interfaces\CacheServiceInterface;
-use Memcached;
+use App\interfaces\SearchServiceInterface;
 
-class CacheService implements CacheServiceInterface
+class SearchService implements SearchServiceInterface
 {
-    protected Memcached $memcached;
-
-    public function __construct(Memcached $memcached)
-    {
-        $this->memcached = $memcached;
-    }
-
-    public function clearCache(): void
-    {
-        $this->memcached->flush();
-    }
-
     public function search(string $query): array
     {
-        $cacheKey = md5($query);
-
-        $results = $this->memcached->get($cacheKey);
-        if (!$results) {
-            $results = $this->findPages($query);
-            $this->memcached->set($cacheKey, $results, 3600);
-        }
-
-        return $results;
+        return $this->findPages($query);
     }
 
     public function findPages(string $query): array
